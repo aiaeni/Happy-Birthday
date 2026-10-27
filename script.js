@@ -7,7 +7,7 @@ const TARGET = {tahun:2026, bulan:11, tanggal:19, jam:00, menit:59, detik:59};
 const TEST_MENIT = 0;
 const _p=n=>String(n).padStart(2,'0');
 const TARGET_DATE = TEST_MENIT>0 ? new Date(Date.now()+TEST_MENIT*60000).toISOString()
-  : `${TARGET.tahun}-${_p(TARGET.bulan)}-${_p(TARGET.tanggal)}T${_p(TARGET.jam)}:${_p(TARGET.menit)}:${_p(TARGET.detik)}+08:00`;
+  : `${TARGET.tahun}-${_p(TARGET.bulan)}-${_p(TARGET.tanggal)}T${_p(TARGET.jam)}:${_p(TARGET.menit)}:${_p(TARGET.detik)}+07:00`;
 const TIME_SOURCES = [                            
   "https://worldtimeapi.org/api/timezone/Asia/Jakarta",
   "https://timeapi.io/api/Time/current/zone?timeZone=Asia/Jakarta"
@@ -40,7 +40,7 @@ async function syncTime(){
   for(const u of TIME_SOURCES){
     try{
       const t0=Date.now(),j=await getJSON(u),t1=Date.now();
-      let ms=j.unixtime?j.unixtime*1000:Date.parse(String(j.dateTime||'').replace(/(\.\d{3})\d*/,'$1')+'+08:00');
+      let ms=j.unixtime?j.unixtime*1000:Date.parse(String(j.dateTime||'').replace(/(\.\d{3})\d*/,'$1')+'+07:00');
       if(!isFinite(ms))continue;
       offset=ms-(t0+t1)/2;synced=true;paintChip();return;
     }catch(e){}
